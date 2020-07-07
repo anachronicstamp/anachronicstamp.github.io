@@ -1,1 +1,148 @@
-const a=['activeItem','top','manual','classList','html,\x20body','video_','stop','from','000','remove','video_pair-4','pause','d-none','dataset','video_pair-1','activeItemTimeline','contains','phase-','currentPage','add','.jpg','target','toggle','active-timeline','src','forEach','offset','getElementById','video_pair-2','getElementsByClassName','active-item','timeline-block'];(function(b,e){const f=function(g){while(--g){b['push'](b['shift']());}};f(++e);}(a,0xcf));const b=function(c,d){c=c-0x0;let e=a[c];return e;};const baseImageSource='images/manual/AnachronicStamp_page-';const fileExtension=b('0x5');const maxPageNumber=0x3F;var currentPage=0x1;function nextImage(){if(this[b('0x3')]<maxPageNumber){this[b('0x3')]++;const c=formatNumber(this[b('0x3')]);setPageNumber(c);}}function previousImage(){if(this[b('0x3')]!=0x1){this[b('0x3')]--;const c=formatNumber(this['currentPage']);setPageNumber(c);}}function setPageNumber(c){const d=baseImageSource+c+fileExtension;document[b('0xc')](b('0x13'))[b('0x9')]=d;}function formatNumber(c){if(c<0xa){return b('0x19')+c;}if(c<0x64){return'00'+c;}if(c<0x3e8){return'0'+c;}return c;}function goToPage(){this['currentPage']=parseInt(event[b('0x6')][b('0x1e')]['page']);const c=formatNumber(this[b('0x3')]);setPageNumber(c);}var activeItem;function toggleActive(){const c=event[b('0x6')][b('0x1e')]['target'];let d=b('0x2')+c;if(!this[b('0x11')]||this[b('0x11')]==d){var e=Array[b('0x18')](document[b('0xe')](d));e[b('0xa')](g=>g[b('0x14')]['toggle'](b('0xf')));}else{var e=Array[b('0x18')](document[b('0xe')](this['activeItem']));e['forEach'](g=>g[b('0x14')][b('0x1a')]('active-item'));var f=Array[b('0x18')](document['getElementsByClassName'](d));f[b('0xa')](g=>g[b('0x14')][b('0x7')](b('0xf')));}this[b('0x11')]=d;toggleFictionBlock(c);}function toggleFictionBlock(c){const d=c;let e=document['getElementsByClassName'](b('0x10'));for(let f=0x0;f<e['length'];f++){if(e[f][b('0x14')][b('0x1')](d)){e[f][b('0x14')][b('0x7')]('d-none');scrollToSection();if(e[f][b('0x14')][b('0x1')](b('0x1d'))){pauseSelfVideo(d);}}else if(!e[f][b('0x14')][b('0x1')](b('0x1d'))){e[f]['classList'][b('0x4')]('d-none');pauseOthers(d);}}}function scrollToSection(){$(b('0x15'))[b('0x17')](!![],![])['animate']({'scrollTop':$('#video_section')[b('0xb')]()[b('0x12')]},0x320);}function pauseSelfVideo(c){videoPlayerId=b('0x16')+c;document[b('0xc')](videoPlayerId)[b('0x1c')]();}function pauseOthers(c){let d=[b('0x1f'),b('0xd'),'video_pair-3',b('0x1b')];for(element in d){if(d[element]!=c){document[b('0xc')](d[element])[b('0x1c')]();}}}var activeItemTimeline;function toggleVisibility(){let c=event[b('0x6')];if(!this[b('0x0')]||this[b('0x0')]==c['id']){c[b('0x14')]['toggle'](b('0x8'));}else{var d=document[b('0xc')](this[b('0x0')]);d[b('0x14')][b('0x1a')](b('0x8'));c[b('0x14')][b('0x7')]('active-timeline');}this[b('0x0')]=c['id'];toggleTimeBlock(c[b('0x1e')]['target']);}function toggleTimeBlock(c){const d=c;let e=document[b('0xe')]('timeline-block');for(let f=0x0;f<e['length'];f++){if(e[f][b('0x14')][b('0x1')](d)){e[f]['classList'][b('0x7')]('d-none');scrollToSection();if(e[f][b('0x14')][b('0x1')](b('0x1d'))){pauseSelfVideo(d);}}else if(!e[f][b('0x14')][b('0x1')](b('0x1d'))){e[f][b('0x14')][b('0x4')](b('0x1d'));pauseOthers(d);}}}
+const baseImageSource = "images/manual/AnachronicStamp_page-";
+const fileExtension = ".jpg";
+const maxPageNumber = 63;
+var currentPage = 1;
+
+function nextImage() {
+	if (this.currentPage < maxPageNumber) {
+		this.currentPage++;
+		const formatedNumber = formatNumber(this.currentPage);
+		setPageNumber(formatedNumber);
+	}
+}
+
+function previousImage() {
+	if (this.currentPage != 1) {
+		this.currentPage--;
+		const formatedNumber = formatNumber(this.currentPage);
+		setPageNumber(formatedNumber);
+	}
+}
+
+function setPageNumber(pageNumber) {
+	const newImageSource = baseImageSource + pageNumber + fileExtension;
+	document.getElementById("manual").src = newImageSource;
+}
+
+function formatNumber(numberToFormat) {
+	if (numberToFormat < 10) {
+		return "000" + numberToFormat;
+	}
+	if (numberToFormat < 100) {
+		return "00" + numberToFormat;
+	}
+	if (numberToFormat < 1000) {
+		return "0" + numberToFormat;
+	}
+	return numberToFormat;
+}
+
+function goToPage() {
+	this.currentPage = parseInt(event.target.dataset.page);
+	const formatedNumber = formatNumber(this.currentPage);
+	setPageNumber(formatedNumber);
+}
+
+var activeItem;
+function toggleActive() {
+	const eventSource = event.target.dataset.target;
+	let newActiveItem = "phase-" + eventSource;
+	if (!this.activeItem || this.activeItem == newActiveItem) {
+		var elements = Array.from(
+			document.getElementsByClassName(newActiveItem)
+		);
+		elements.forEach((element) => element.classList.toggle("active-item"));
+	} else {
+		var elements = Array.from(
+			document.getElementsByClassName(this.activeItem)
+		);
+		elements.forEach((element) => element.classList.remove("active-item"));
+		var newElements = Array.from(
+			document.getElementsByClassName(newActiveItem)
+		);
+		newElements.forEach((element) =>
+			element.classList.toggle("active-item")
+		);
+	}
+	this.activeItem = newActiveItem;
+	toggleFictionBlock(eventSource);
+}
+function toggleFictionBlock(target) {
+	const targetClassIdentifier = target;
+	let timelineBlockElements = document.getElementsByClassName(
+		"timeline-block"
+	);
+	for (let j = 0; j < timelineBlockElements.length; j++) {
+		if (
+			timelineBlockElements[j].classList.contains(targetClassIdentifier)
+		) {
+			timelineBlockElements[j].classList.toggle("d-none");
+			scrollToSection();
+			if (timelineBlockElements[j].classList.contains("d-none")) {
+				pauseSelfVideo(targetClassIdentifier);
+			}
+		} else if (!timelineBlockElements[j].classList.contains("d-none")) {
+			timelineBlockElements[j].classList.add("d-none");
+			pauseOthers(targetClassIdentifier);
+		}
+	}
+}
+
+function scrollToSection() {
+	$("html, body")
+		.stop(true, false)
+		.animate({ scrollTop: $("#video_section").offset().top }, 800);
+}
+
+function pauseSelfVideo(target) {
+	videoPlayerId = "video_" + target;
+	document.getElementById(videoPlayerId).pause();
+}
+
+function pauseOthers(excludePlayer) {
+	let listOfPlayersIds = [
+		"video_pair-1",
+		"video_pair-2",
+		"video_pair-3",
+		"video_pair-4"
+	];
+	for (element in listOfPlayersIds) {
+		if (listOfPlayersIds[element] != excludePlayer) {
+			document.getElementById(listOfPlayersIds[element]).pause();
+		}
+	}
+}
+
+var activeItemTimeline;
+function toggleVisibility() {
+	let target = event.target;
+	if (!this.activeItemTimeline || this.activeItemTimeline == target.id) {
+		target.classList.toggle("active-timeline");
+	} else {
+		var element = document.getElementById(this.activeItemTimeline);
+		element.classList.remove("active-timeline");
+		target.classList.toggle("active-timeline");
+	}
+	this.activeItemTimeline = target.id;
+	toggleTimeBlock(target.dataset.target);
+}
+function toggleTimeBlock(target) {
+	const targetClassIdentifier = target;
+	let timelineBlockElements = document.getElementsByClassName(
+		"timeline-block"
+	);
+	for (let j = 0; j < timelineBlockElements.length; j++) {
+		if (
+			timelineBlockElements[j].classList.contains(targetClassIdentifier)
+		) {
+			timelineBlockElements[j].classList.toggle("d-none");
+			scrollToSection();
+			if (timelineBlockElements[j].classList.contains("d-none")) {
+				pauseSelfVideo(targetClassIdentifier);
+			}
+		} else if (!timelineBlockElements[j].classList.contains("d-none")) {
+			timelineBlockElements[j].classList.add("d-none");
+			pauseOthers(targetClassIdentifier);
+		}
+	}
+}
